@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 const affiliations = [
   { school: "Harvard University", role: "Research", color: "#A51C30" },
   { school: "Brown University", role: "Research", color: "#4E3629" },
@@ -8,10 +10,10 @@ const affiliations = [
 ];
 
 const stats = [
-  { value: "4", label: "R1 Institutions" },
-  { value: "6", label: "Continents Mentored" },
-  { value: "1-on-1", label: "Mentorship Style" },
-  { value: "Free", label: "Always" },
+  { value: "90+",   label: "Mentees Worldwide" },
+  { value: "6",     label: "Continents" },
+  { value: "1-on-1", label: "Every Session" },
+  { value: "Free",  label: "Always" },
 ];
 
 export default function About() {
@@ -69,17 +71,18 @@ export default function About() {
             </div>
           </div>
 
-          {/* Right: stats + photo placeholder */}
+          {/* Right: stats + photo */}
           <div className="space-y-6">
-            {/* Photo placeholder */}
-            <div className="glass-card glow-border rounded-2xl aspect-[4/3] flex items-center justify-center relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-sky-400/5 to-transparent" />
-              <div className="text-center text-white/30">
-                <div className="w-20 h-20 rounded-full border border-white/10 mx-auto mb-3 flex items-center justify-center text-3xl">
-                  AD
-                </div>
-                <p className="text-xs tracking-widest uppercase">Photo</p>
-              </div>
+            {/* Photo */}
+            <div className="glow-border rounded-2xl overflow-hidden">
+              <Image
+                src="/anvit.png"
+                alt="Anvit Divekar"
+                width={1368}
+                height={1366}
+                className="w-full h-auto block"
+                priority
+              />
             </div>
 
             {/* Stats grid */}

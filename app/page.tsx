@@ -2,8 +2,10 @@ import Nav from "./components/Nav";
 import ParticleBackground from "./components/ParticleBackground";
 import Hero from "./components/Hero";
 import About from "./components/About";
+import GlobalReach from "./components/GlobalReach";
 import Research from "./components/Research";
 import Mentorship from "./components/Mentorship";
+import FAQ from "./components/FAQ";
 import Apply from "./components/Apply";
 import Publications from "./components/Publications";
 import Contact from "./components/Contact";
@@ -22,8 +24,10 @@ export default function Home() {
       <main style={{ position: "relative", zIndex: 1 }}>
         <Hero />
         <About />
+        <GlobalReach />
         <Research />
         <Mentorship />
+        <FAQ />
         <Apply />
         <Publications />
         <Contact />

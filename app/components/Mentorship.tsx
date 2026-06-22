@@ -11,7 +11,7 @@ const steps = [
     number: "02",
     title: "Matching",
     description:
-      "You're matched with a mentor — a researcher at a top university whose work aligns with your interests and goals.",
+      "You're matched with a PhD student or postdoctoral researcher at an R1 university whose work aligns with your interests. Every mentor is vetted and works directly with you — not through intermediaries.",
   },
   {
     number: "03",

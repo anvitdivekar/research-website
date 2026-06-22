@@ -8,18 +8,18 @@ export default function Hero() {
 
       <div className="relative">
         <p className="text-xs uppercase tracking-[0.4em] text-sky-400/80 mb-8 font-medium">
-          Research · Mentorship · Discovery
+          Free · 1-on-1 · Peer-Reviewed
         </p>
 
         <h1 className="text-5xl md:text-7xl lg:text-8xl font-extralight tracking-tight mb-6 leading-[1.05]">
-          <span className="shimmer-text">Technology that redefines</span>
+          <span className="shimmer-text">Your first peer-reviewed</span>
           <br />
-          <span className="text-white/90">the nature of interaction.</span>
+          <span className="text-white/90">publication starts here.</span>
         </h1>
 
         <p className="text-lg md:text-xl text-white/50 max-w-2xl mx-auto mt-6 leading-relaxed font-light">
-          Everything revolves around one thing&mdash;
-          <span className="text-white/80">your growth.</span>
+          Free 1-on-1 research mentorship for high school students&mdash;
+          <span className="text-white/80">guided by university researchers.</span>
         </p>
 
         <div className="mt-14 flex flex-col sm:flex-row gap-4 justify-center items-center">
