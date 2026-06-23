@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { fadeUp, staggerContainer, viewport } from "./animations";
+import { sectionReveal, viewport } from "./animations";
 
 const FAQS = [
   {
@@ -48,33 +48,26 @@ export default function FAQ() {
       className="relative py-32 px-6"
       style={{ background: "rgba(3,3,14,0.35)" }}
     >
-      <div className="max-w-3xl mx-auto">
-        <motion.div
-          className="text-center mb-16"
-          variants={staggerContainer(0.12)}
+      <motion.div
+          className="max-w-3xl mx-auto"
+          variants={sectionReveal}
           initial="hidden"
           whileInView="show"
           viewport={viewport}
         >
-          <motion.p variants={fadeUp} className="text-xs uppercase tracking-[0.4em] text-sky-400/80 mb-6 font-medium">
+        <div className="text-center mb-16">
+          <p className="text-xs uppercase tracking-[0.4em] text-sky-400/80 mb-6 font-medium">
             FAQ
-          </motion.p>
-          <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-extralight tracking-tight text-white leading-tight">
+          </p>
+          <h2 className="text-4xl md:text-5xl font-extralight tracking-tight text-white leading-tight">
             Common questions.
-          </motion.h2>
-        </motion.div>
+          </h2>
+        </div>
 
-        <motion.div
-          className="space-y-3"
-          variants={staggerContainer(0.07)}
-          initial="hidden"
-          whileInView="show"
-          viewport={viewport}
-        >
+        <div className="space-y-3">
           {FAQS.map((item, i) => (
-            <motion.div
+            <div
               key={i}
-              variants={fadeUp}
               className="glass-card rounded-2xl overflow-hidden"
             >
               <button
@@ -99,10 +92,10 @@ export default function FAQ() {
                   </p>
                 </div>
               )}
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
-      </div>
+        </div>
+      </motion.div>
 
       <div className="section-divider mt-32" />
     </section>
