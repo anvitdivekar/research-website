@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
+import { fadeUp, staggerContainer, viewport } from "./animations";
 
 const FAQS = [
   {
@@ -47,19 +49,32 @@ export default function FAQ() {
       style={{ background: "rgba(3,3,14,0.35)" }}
     >
       <div className="max-w-3xl mx-auto">
-        <div className="text-center mb-16">
-          <p className="text-xs uppercase tracking-[0.4em] text-sky-400/80 mb-6 font-medium">
+        <motion.div
+          className="text-center mb-16"
+          variants={staggerContainer(0.12)}
+          initial="hidden"
+          whileInView="show"
+          viewport={viewport}
+        >
+          <motion.p variants={fadeUp} className="text-xs uppercase tracking-[0.4em] text-sky-400/80 mb-6 font-medium">
             FAQ
-          </p>
-          <h2 className="text-4xl md:text-5xl font-extralight tracking-tight text-white leading-tight">
+          </motion.p>
+          <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-extralight tracking-tight text-white leading-tight">
             Common questions.
-          </h2>
-        </div>
+          </motion.h2>
+        </motion.div>
 
-        <div className="space-y-3">
+        <motion.div
+          className="space-y-3"
+          variants={staggerContainer(0.07)}
+          initial="hidden"
+          whileInView="show"
+          viewport={viewport}
+        >
           {FAQS.map((item, i) => (
-            <div
+            <motion.div
               key={i}
+              variants={fadeUp}
               className="glass-card rounded-2xl overflow-hidden"
             >
               <button
@@ -84,9 +99,9 @@ export default function FAQ() {
                   </p>
                 </div>
               )}
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
 
       <div className="section-divider mt-32" />

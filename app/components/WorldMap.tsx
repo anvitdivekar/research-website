@@ -124,8 +124,8 @@ export default function WorldMap() {
       >
         <ZoomableGroup center={[0, 10]} zoom={1}>
           <Geographies geography={GEO_URL}>
-            {({ geographies }) =>
-              geographies.map((geo) => (
+            {({ geographies }: { geographies: any[] }) =>
+              geographies.map((geo: any) => (
                 <Geography
                   key={geo.rsmKey}
                   geography={geo}

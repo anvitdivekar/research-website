@@ -1,5 +1,8 @@
 "use client";
 
+import { motion } from "framer-motion";
+import { fadeUp, staggerContainer, viewport } from "./animations";
+
 const steps = [
   {
     number: "01",
@@ -45,25 +48,38 @@ export default function Mentorship() {
   return (
     <section id="mentorship" className="relative py-32 px-6" style={{ background: "rgba(3,3,14,0.35)" }}>
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-20">
-          <p className="text-xs uppercase tracking-[0.4em] text-sky-400/80 mb-6 font-medium">
+        <motion.div
+          className="text-center mb-20"
+          variants={staggerContainer(0.12)}
+          initial="hidden"
+          whileInView="show"
+          viewport={viewport}
+        >
+          <motion.p variants={fadeUp} className="text-xs uppercase tracking-[0.4em] text-sky-400/80 mb-6 font-medium">
             The Program
-          </p>
-          <h2 className="text-4xl md:text-5xl font-extralight tracking-tight text-white leading-tight">
+          </motion.p>
+          <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-extralight tracking-tight text-white leading-tight">
             From idea to
             <br />
             <span className="text-white/50">peer-reviewed publication.</span>
-          </h2>
-        </div>
+          </motion.h2>
+        </motion.div>
 
         {/* Process timeline */}
         <div className="relative mb-24">
           <div className="absolute left-[18px] top-0 bottom-0 w-px bg-gradient-to-b from-sky-400/40 via-sky-400/20 to-transparent md:left-1/2" />
 
-          <div className="space-y-12">
+          <motion.div
+            className="space-y-12"
+            variants={staggerContainer(0.15)}
+            initial="hidden"
+            whileInView="show"
+            viewport={viewport}
+          >
             {steps.map((step, i) => (
-              <div
+              <motion.div
                 key={step.number}
+                variants={fadeUp}
                 className={`flex gap-8 ${i % 2 === 1 ? "md:flex-row-reverse" : "md:flex-row"} items-start`}
               >
                 {/* Number node */}
@@ -81,26 +97,37 @@ export default function Mentorship() {
                     {step.description}
                   </p>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
 
         {/* Who qualifies */}
         <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div>
-            <h3 className="text-2xl font-light text-white mb-6">Who should apply</h3>
+          <motion.div
+            variants={staggerContainer(0.1)}
+            initial="hidden"
+            whileInView="show"
+            viewport={viewport}
+          >
+            <motion.h3 variants={fadeUp} className="text-2xl font-light text-white mb-6">Who should apply</motion.h3>
             <ul className="space-y-3">
               {who.map((w) => (
-                <li key={w} className="flex items-start gap-3">
+                <motion.li key={w} variants={fadeUp} className="flex items-start gap-3">
                   <span className="text-sky-400 mt-0.5 flex-shrink-0">—</span>
                   <span className="text-sm text-white/60 font-light leading-relaxed">{w}</span>
-                </li>
+                </motion.li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
-          <div className="glass-card glow-border rounded-2xl p-8">
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={viewport}
+            className="glass-card glow-border rounded-2xl p-8"
+          >
             <p className="text-xs uppercase tracking-[0.3em] text-sky-400/70 mb-4">
               Program Details
             </p>
@@ -119,7 +146,7 @@ export default function Mentorship() {
                 </div>
               ))}
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
 

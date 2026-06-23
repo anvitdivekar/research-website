@@ -1,5 +1,8 @@
 "use client";
 
+import { motion } from "framer-motion";
+import { fadeUp, staggerContainer, viewport } from "./animations";
+
 const areas = [
   {
     title: "Neuroscience",
@@ -49,21 +52,34 @@ export default function Research() {
   return (
     <section id="research" className="relative py-32 px-6" style={{ background: "rgba(3,3,14,0.35)" }}>
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-20">
-          <p className="text-xs uppercase tracking-[0.4em] text-sky-400/80 mb-6 font-medium">
+        <motion.div
+          className="text-center mb-20"
+          variants={staggerContainer(0.12)}
+          initial="hidden"
+          whileInView="show"
+          viewport={viewport}
+        >
+          <motion.p variants={fadeUp} className="text-xs uppercase tracking-[0.4em] text-sky-400/80 mb-6 font-medium">
             Research Areas
-          </p>
-          <h2 className="text-4xl md:text-5xl font-extralight tracking-tight text-white leading-tight">
+          </motion.p>
+          <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-extralight tracking-tight text-white leading-tight">
             Where curiosity
             <br />
             <span className="text-white/50">becomes publication.</span>
-          </h2>
-        </div>
+          </motion.h2>
+        </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <motion.div
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-5"
+          variants={staggerContainer(0.08)}
+          initial="hidden"
+          whileInView="show"
+          viewport={viewport}
+        >
           {areas.map((area) => (
-            <div
+            <motion.div
               key={area.title}
+              variants={fadeUp}
               className="glass-card rounded-2xl p-7 hover:border-sky-400/20 transition-all duration-300 group hover:glow-border"
             >
               <div className="text-sky-400/40 text-2xl mb-5 group-hover:text-sky-400/70 transition-colors">
@@ -83,9 +99,9 @@ export default function Research() {
                   </span>
                 ))}
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
 
       <div className="section-divider mt-32" />
