@@ -3,19 +3,35 @@
 import { useEffect, useState } from "react";
 
 const links = [
-  { label: "About",      href: "#about" },
-  { label: "Research",   href: "#research" },
-  { label: "Mentorship", href: "#mentorship" },
-  { label: "FAQ",        href: "#faq" },
-  { label: "Contact",    href: "#contact" },
+  { label: "About",      href: "#about",      id: "about" },
+  { label: "Research",   href: "#research",   id: "research" },
+  { label: "Mentorship", href: "#mentorship", id: "mentorship" },
+  { label: "FAQ",        href: "#faq",        id: "faq" },
+  { label: "Contact",    href: "#contact",    id: "contact" },
 ];
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState("");
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 60);
+
+      // Find which section is currently in view
+      const offset = 120; // nav height + buffer
+      let current = "";
+      for (const link of links) {
+        const el = document.getElementById(link.id);
+        if (el && el.getBoundingClientRect().top <= offset) {
+          current = link.id;
+        }
+      }
+      setActive(current);
+    };
+
     window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
@@ -40,9 +56,16 @@ export default function Nav() {
             <li key={l.href}>
               <a
                 href={l.href}
-                className="text-sm text-white/60 hover:text-white transition-colors duration-200 tracking-wide"
+                className={`text-sm tracking-wide transition-colors duration-200 relative ${
+                  active === l.id
+                    ? "text-white"
+                    : "text-white/50 hover:text-white/80"
+                }`}
               >
                 {l.label}
+                {active === l.id && (
+                  <span className="absolute -bottom-1 left-0 right-0 h-px bg-sky-400/70 rounded-full" />
+                )}
               </a>
             </li>
           ))}
