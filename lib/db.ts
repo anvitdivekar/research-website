@@ -127,6 +127,18 @@ export async function deleteAvailability(id: string): Promise<void> {
   await supabase.from("availability").delete().eq("id", id);
 }
 
+export async function getMentorForMentee(menteeEmail: string): Promise<User | null> {
+  const { data } = await supabase
+    .from("pairs")
+    .select("mentor:users!pairs_mentor_email_fkey(email, name, avatar, role, created_at)")
+    .eq("mentee_email", menteeEmail)
+    .eq("status", "active")
+    .limit(1)
+    .single();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return ((data as any)?.mentor ?? null) as User | null;
+}
+
 export async function getMenteesForMentor(mentorEmail: string): Promise<User[]> {
   const { data } = await supabase
     .from("pairs")
@@ -135,4 +147,70 @@ export async function getMenteesForMentor(mentorEmail: string): Promise<User[]> 
     .eq("status", "active");
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return ((data ?? []).map((r: any) => r.mentee).filter(Boolean)) as User[];
+}
+
+export interface BookedSession {
+  id: string;
+  mentor_email: string;
+  mentee_email: string;
+  availability_id: string | null;
+  session_date: string;
+  start_time: string;
+  end_time: string;
+  timezone: string;
+  google_event_id: string | null;
+  meet_link: string | null;
+  status: string;
+  created_at: string;
+  mentor?: User;
+}
+
+export async function createSession(params: {
+  mentor_email: string;
+  mentee_email: string;
+  availability_id: string;
+  session_date: string;
+  start_time: string;
+  end_time: string;
+  timezone: string;
+  google_event_id?: string;
+  meet_link?: string;
+}): Promise<{ id?: string; error?: string }> {
+  const { data, error } = await supabase
+    .from("sessions")
+    .insert(params)
+    .select("id")
+    .single();
+  if (error) return { error: error.message };
+  return { id: data?.id };
+}
+
+export async function getSessionsForMentee(menteeEmail: string): Promise<BookedSession[]> {
+  const { data } = await supabase
+    .from("sessions")
+    .select(`
+      *,
+      mentor:users!sessions_mentor_email_fkey(email, name, avatar, role, created_at)
+    `)
+    .eq("mentee_email", menteeEmail)
+    .eq("status", "scheduled")
+    .gte("session_date", new Date().toISOString().split("T")[0])
+    .order("session_date")
+    .order("start_time");
+  return (data ?? []) as BookedSession[];
+}
+
+export async function getSessionsForMentor(mentorEmail: string): Promise<BookedSession[]> {
+  const { data } = await supabase
+    .from("sessions")
+    .select(`
+      *,
+      mentee:users!sessions_mentee_email_fkey(email, name, avatar, role, created_at)
+    `)
+    .eq("mentor_email", mentorEmail)
+    .eq("status", "scheduled")
+    .gte("session_date", new Date().toISOString().split("T")[0])
+    .order("session_date")
+    .order("start_time");
+  return (data ?? []) as BookedSession[];
 }

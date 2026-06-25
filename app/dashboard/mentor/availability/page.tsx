@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import { getUserRole, getAvailability, getMenteesForMentor } from "@/lib/db";
+import { getUserRole, getAvailability, getMenteesForMentor, getSessionsForMentor } from "@/lib/db";
 import { removeSlot } from "@/app/actions/mentor";
 import { redirect } from "next/navigation";
 import AvailabilityForm from "./AvailabilityForm";
@@ -20,9 +20,10 @@ export default async function MentorAvailabilityPage() {
   if (role !== "mentor") redirect("/dashboard");
 
   const email = session.user.email;
-  const [slots, mentees] = await Promise.all([
+  const [slots, mentees, upcomingSessions] = await Promise.all([
     getAvailability(email),
     getMenteesForMentor(email),
+    getSessionsForMentor(email),
   ]);
 
   return (
@@ -70,6 +71,44 @@ export default async function MentorAvailabilityPage() {
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+        )}
+
+        {/* Upcoming booked sessions */}
+        {upcomingSessions.length > 0 && (
+          <div className="glass-card rounded-2xl p-5 mb-8">
+            <p className="text-xs uppercase tracking-[0.3em] text-sky-400/80 mb-4 font-medium">
+              Upcoming sessions
+            </p>
+            <div className="space-y-3">
+              {upcomingSessions.map((s) => {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                const mentee = (s as any).mentee;
+                return (
+                  <div key={s.id} className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/8 flex items-center justify-center flex-shrink-0 text-[10px] text-white/40">
+                      {new Date(s.session_date + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-sm text-white font-light">
+                        {mentee?.name ?? s.mentee_email} · {fmt12(s.start_time)} – {fmt12(s.end_time)}
+                      </p>
+                      <p className="text-[10px] text-white/30">{s.timezone}</p>
+                    </div>
+                    {s.meet_link && (
+                      <a
+                        href={s.meet_link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs px-3 py-1.5 rounded-lg bg-sky-400/10 border border-sky-400/30 text-sky-400 hover:bg-sky-400/20 transition-colors whitespace-nowrap"
+                      >
+                        Join Meet →
+                      </a>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
         )}
