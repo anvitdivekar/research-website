@@ -92,12 +92,22 @@ function MentorView({ name }: { name: string }) {
     <div className="glass-card glow-border rounded-3xl p-8">
       <p className="text-xs uppercase tracking-[0.4em] text-sky-400/80 mb-6 font-medium">Mentor</p>
       <h2 className="text-2xl font-extralight text-white mb-2">Hey, {name.split(" ")[0]}.</h2>
-      <p className="text-sm text-white/40 font-light mb-8">Your mentor dashboard is coming soon.</p>
-      <div className="space-y-3 opacity-40 pointer-events-none">
-        {["My Mentees", "Set Availability", "Upcoming Sessions"].map((t) => (
-          <div key={t} className="p-4 rounded-xl border border-white/8">
-            <p className="text-sm text-white font-light">{t}</p>
-          </div>
+      <p className="text-sm text-white/40 font-light mb-8">Manage your schedule and mentees.</p>
+      <div className="space-y-3">
+        {[
+          ["Availability", "Set your weekly time blocks", "/dashboard/mentor/availability"],
+        ].map(([title, desc, href]) => (
+          <a
+            key={href}
+            href={href}
+            className="flex items-center justify-between p-4 rounded-xl border border-white/8 hover:border-sky-400/30 hover:bg-white/[0.02] transition-all group"
+          >
+            <div>
+              <p className="text-sm text-white font-light">{title}</p>
+              <p className="text-xs text-white/30 mt-0.5">{desc}</p>
+            </div>
+            <span className="text-white/20 group-hover:text-sky-400/60 transition-colors text-lg">→</span>
+          </a>
         ))}
       </div>
     </div>

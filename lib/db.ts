@@ -87,3 +87,52 @@ export async function createPair(
 export async function deletePair(id: string): Promise<void> {
   await supabase.from("pairs").delete().eq("id", id);
 }
+
+// day_of_week: 0=Sunday … 6=Saturday (JS Date.getDay() convention)
+export interface Availability {
+  id: string;
+  mentor_email: string;
+  day_of_week: number;
+  start_time: string;
+  end_time: string;
+  timezone: string;
+  created_at: string;
+}
+
+export async function getAvailability(mentorEmail: string): Promise<Availability[]> {
+  const { data } = await supabase
+    .from("availability")
+    .select("*")
+    .eq("mentor_email", mentorEmail)
+    .order("day_of_week")
+    .order("start_time");
+  return (data ?? []) as Availability[];
+}
+
+export async function addAvailability(
+  mentorEmail: string,
+  day_of_week: number,
+  start_time: string,
+  end_time: string,
+  timezone: string
+): Promise<{ error?: string }> {
+  const { error } = await supabase
+    .from("availability")
+    .insert({ mentor_email: mentorEmail, day_of_week, start_time, end_time, timezone });
+  if (error) return { error: error.message };
+  return {};
+}
+
+export async function deleteAvailability(id: string): Promise<void> {
+  await supabase.from("availability").delete().eq("id", id);
+}
+
+export async function getMenteesForMentor(mentorEmail: string): Promise<User[]> {
+  const { data } = await supabase
+    .from("pairs")
+    .select("mentee:users!pairs_mentee_email_fkey(email, name, avatar, role, created_at)")
+    .eq("mentor_email", mentorEmail)
+    .eq("status", "active");
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return ((data ?? []).map((r: any) => r.mentee).filter(Boolean)) as User[];
+}
