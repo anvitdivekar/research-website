@@ -71,12 +71,20 @@ export default function Nav() {
           ))}
         </ul>
 
-        <a
-          href="#apply"
-          className="hidden md:block text-xs font-semibold uppercase tracking-widest px-5 py-2.5 rounded-full border border-sky-400/50 text-sky-400 hover:bg-sky-400/10 hover:border-sky-400 transition-all duration-200"
-        >
-          Apply
-        </a>
+        <div className="hidden md:flex items-center gap-3">
+          <a
+            href="/login"
+            className="text-xs font-semibold uppercase tracking-widest px-4 py-2 rounded-full border border-white/20 text-white/50 hover:text-white/80 hover:border-white/40 transition-all duration-200"
+          >
+            Login
+          </a>
+          <a
+            href="#apply"
+            className="text-xs font-semibold uppercase tracking-widest px-5 py-2.5 rounded-full border border-sky-400/50 text-sky-400 hover:bg-sky-400/10 hover:border-sky-400 transition-all duration-200"
+          >
+            Apply
+          </a>
+        </div>
       </nav>
     </header>
   );
